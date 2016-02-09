@@ -8,24 +8,37 @@ use Psr\Log\LogLevel;
 
 abstract class AbstractAdapter extends AbstractLogger
 {
-
+    /**
+     * Default loglevel
+     *
+     * @var string
+     */
     private $level = LogLevel::DEBUG;
 
-    public function setLevel($level)
+    /**
+     *
+     * @param $level
+     */
+    public function setMinLevel($level)
     {
         $this->level = $level;
     }
 
-    public function getLevel()
+    /**
+     * @return string
+     */
+    public function getMinLevel()
     {
         return $this->level;
     }
 
-    public function dump($variable)
-    {
-        $this->log(LogLevel::DEBUG, var_export($variable, true));
-    }
-
+    /**
+     * Interpolates context values into the message placeholders.
+     *
+     * @param $message
+     * @param array $context
+     * @return string
+     */
     protected function interpolate($message, array $context = array())
     {
         $replace = array();

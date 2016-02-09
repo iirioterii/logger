@@ -11,9 +11,15 @@ use Psr\Log\LogLevel;
 class Logger extends AbstractLogger implements LoggerAwareInterface
 
 {
-
+    /**
+     * @var array
+     */
     private $loggers = array();
 
+    /**
+     * @param $level
+     * @return int
+     */
     public function getLevelPriority($level)
     {
         switch ($level) {
@@ -35,15 +41,25 @@ class Logger extends AbstractLogger implements LoggerAwareInterface
         return 100;
     }
 
+    /**
+     * @param LoggerInterface $logger
+     */
     public function setLogger(LoggerInterface $logger)
     {
         $this->loggers[] = $logger;
     }
 
+    /**
+     * Proxy method to Adapters
+     *
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
+     */
     public function log($level, $message, array $context = array())
     {
         foreach ($this->loggers as $logger) {
-            if ($this->getLevelPriority($level) >= $this->getLevelPriority($logger->getLevel())) {
+            if ($this->getLevelPriority($level) >= $this->getLevelPriority($logger->getMinLevel())) {
                 $logger->log($level, $message, $context);
             }
         }
