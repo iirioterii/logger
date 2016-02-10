@@ -5,7 +5,9 @@ namespace Rioter\Logger\Adapters;
 use Psr\Log\LogLevel;
 
 
-class NullAdapter
+class NullAdapter extends AbstractAdapter
 {
-
+    public function save($level, $message, array $context = array())
+    {
+    }
 }

@@ -7,7 +7,6 @@ use Psr\Log\LogLevel;
 use Psr\Log\InvalidArgumentException;
 
 use Rioter\Logger\Adapters\AbstractAdapter;
-use Rioter\Logger\Adapters\NullAdapter;
 
 class Logger implements LoggerInterface
 {
@@ -32,11 +31,8 @@ class Logger implements LoggerInterface
         LogLevel::DEBUG     => 7
     );
 
-    public function __construct(AbstractAdapter $adapter, $loggerName)
+    public function __construct(AbstractAdapter $adapter, $loggerName='DefaultLogger')
     {
-        if(empty($adapter)) {
-            $adapter = new NullAdapter();
-        }
         $this->setAdapter($adapter);
         $this->setLoggerName($loggerName);
     }
@@ -44,7 +40,10 @@ class Logger implements LoggerInterface
     // установка адаптера для записи логов
     public function setAdapter(AbstractAdapter $adapter)
     {
-        $this->adapter = $adapter;
+        $adapterName = $adapter->getAdapterName() ?: $this->adapterCount;
+        $this->adapters[$adapterName] = $adapter;
+        $this->adapterCount++;
+
     }
 
     // получаем все установленые адаптеры
@@ -65,8 +64,8 @@ class Logger implements LoggerInterface
         return $this->loggerName;
     }
 
-    // проверка на то правильный ли logLEvel
-    public function isLogLevel($logLevel)
+    // проверка на то правильный ли logLevel
+    public static function isLogLevel($logLevel)
     {
         return array_key_exists($logLevel, self::$levels);
     }
@@ -81,7 +80,7 @@ class Logger implements LoggerInterface
      */
     public function emergency($message, array $context = array())
     {
-        // TODO: Implement emergency() method.
+        $this->log(LogLevel::EMERGENCY, $message, $context);
     }
 
     /**
@@ -96,7 +95,7 @@ class Logger implements LoggerInterface
      */
     public function alert($message, array $context = array())
     {
-        // TODO: Implement alert() method.
+        $this->log(LogLevel::ALERT, $message, $context);
     }
 
     /**
@@ -110,7 +109,7 @@ class Logger implements LoggerInterface
      */
     public function critical($message, array $context = array())
     {
-        // TODO: Implement critical() method.
+        $this->log(LogLevel::CRITICAL, $message, $context);
     }
 
     /**
@@ -123,7 +122,7 @@ class Logger implements LoggerInterface
      */
     public function error($message, array $context = array())
     {
-        // TODO: Implement error() method.
+        $this->log(LogLevel::ERROR, $message, $context);
     }
 
     /**
@@ -138,7 +137,7 @@ class Logger implements LoggerInterface
      */
     public function warning($message, array $context = array())
     {
-        // TODO: Implement warning() method.
+        $this->log(LogLevel::WARNING, $message, $context);
     }
 
     /**
@@ -150,7 +149,7 @@ class Logger implements LoggerInterface
      */
     public function notice($message, array $context = array())
     {
-        // TODO: Implement notice() method.
+        $this->log(LogLevel::NOTICE, $message, $context);
     }
 
     /**
@@ -164,7 +163,7 @@ class Logger implements LoggerInterface
      */
     public function info($message, array $context = array())
     {
-        // TODO: Implement info() method.
+        $this->log(LogLevel::INFO, $message, $context);
     }
 
     /**
@@ -176,7 +175,7 @@ class Logger implements LoggerInterface
      */
     public function debug($message, array $context = array())
     {
-        // TODO: Implement debug() method.
+        $this->log(LogLevel::DEBUG, $message, $context);
     }
 
     /**
@@ -189,7 +188,16 @@ class Logger implements LoggerInterface
      */
     public function log($level, $message, array $context = array())
     {
-        // TODO: Implement log() method.
+        if (!self::isLogLevel($level)) {
+           throw new InvalidArgumentException('Unknown level, check it');
+        }
+
+        foreach($this->adapters as $adapter) {
+            if ($adapter->isHandling($level)) {
+                $adapter->save($level, $message, $context);
+            }
+        }
+
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rioter\Logger\Formatter;
+namespace Rioter\Logger\Formatters;
 
 
 interface FormatterInterface
