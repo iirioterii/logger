@@ -20,34 +20,31 @@ composer require rioter/logger
 
 
 Logging to file.
-Create object of FileAdapter class and set path and name to log file.
+Create object of FileAdapter class and set path and name to log file, and if you want set min level (default 'debug')
 
 ```php
 
-$fileAdapter = new \Rioter\Logger\Adapters\FileAdapter(__DIR__ . '/logs.log');
+$fileAdapter = new \Rioter\Logger\Adapters\FileAdapter('logs/log.txt', 'info');
 ```
 
-Set minimal level of logging
+Create object of main logger, and set adapter;
 ```php
-$fileAdapter->setMinLevel(Psr\Log\LogLevel::ERROR);
+$logger = new \Rioter\Logger\Logger($fileAdapter);
 ```
-Create object of main logger, and set logger;
-```php
-$logger = new Rioter\Logger\Logger();
-$logger->setLogger($fileAdapter);
 
-```
-Set log levels, context, use placeholder how in example
+Set logs, context, use placeholder how in example
 ```php
-$logger->debug('debug');
-$logger->error('Error at {filename} at line {line} and var = {id}', array('id' => '10', 'filename' => __FILE__, 'line' => __LINE__));
-$logger->emergency('emergency!');
+$logger->error('message of errors');
+$logger->critical('critical of errors);
+$logger->debug('debug of errors {id} {line} {file}', array('id'=>1, 'line'=>__LINE__, 'file' => __FILE__));
+$logger->warning('warning', array('id'=>1));
 
 ```
 
 Output:
 ```no-highlight
-[2016-02-05 11:06:22.386600] [error] Error at /home/iirioterii/server/logger/index.php at line 12 and var = 10
-[2016-02-05 11:06:22.386905] [emergency] emergency!
-
+2016-02-10 23:54:40.436207: [ERROR] Message: message of errors 1
+2016-02-10 23:54:40.436633: [CRITICAL] Message: critical of errors 1
+2016-02-10 23:54:40.436866: [DEBUG] Message: debug of errors 1 22 /home/iirioterii/server/logger/index.php
+2016-02-10 23:54:40.437079: [WARNING] Message: warning
 ```
