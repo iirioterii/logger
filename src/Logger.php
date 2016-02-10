@@ -2,67 +2,32 @@
 
 namespace Rioter\Logger;
 
-use Psr\Log\AbstractLogger;
-use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Psr\Log\InvalidArgumentException;
 
+use Rioter\Logger\Adapters\AbstractAdapter;
 
-class Logger extends AbstractLogger implements LoggerAwareInterface
-
+class Logger
 {
-    /**
-     * @var array
-     */
-    private $loggers = array();
+    // массив с адаптерами для того чтобы сохранять логи
+    protected $adapters = [];
 
-    /**
-     * @param $level
-     * @return int
-     */
-    public function getLevelPriority($level)
-    {
-        switch ($level) {
-            case LogLevel::EMERGENCY:
-                return 600;
-            case LogLevel::ALERT:
-                return 550;
-            case LogLevel::CRITICAL:
-                return 500;
-            case LogLevel::ERROR:
-                return 400;
-            case LogLevel::WARNING:
-                return 300;
-            case LogLevel::NOTICE:
-                return 250;
-            case LogLevel::INFO:
-                return 200;
-        }
-        return 100;
-    }
+    // подсчет количества адаптеров, во время выполнения
+    protected $adapterCount = 0;
 
-    /**
-     * @param LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->loggers[] = $logger;
-    }
+    // имя логгера
+    protected $name;
 
-    /**
-     * Proxy method to Adapters
-     *
-     * @param mixed $level
-     * @param string $message
-     * @param array $context
-     */
-    public function log($level, $message, array $context = array())
-    {
-        foreach ($this->loggers as $logger) {
-            if ($this->getLevelPriority($level) >= $this->getLevelPriority($logger->getMinLevel())) {
-                $logger->log($level, $message, $context);
-            }
-        }
-    }
-
+    // массив с log levels с цифрами
+    public static $levels = array(
+        LogLevel::EMERGENCY => 0,
+        LogLevel::ALERT     => 1,
+        LogLevel::CRITICAL  => 2,
+        LogLevel::ERROR     => 3,
+        LogLevel::WARNING   => 4,
+        LogLevel::NOTICE    => 5,
+        LogLevel::INFO      => 6,
+        LogLevel::DEBUG     => 7
+    );
 }

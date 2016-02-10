@@ -2,50 +2,15 @@
 
 namespace Rioter\Logger\Adapters;
 
-use Psr\Log\AbstractLogger;
+use Rioter\Logger\Logger;
 use Psr\Log\LogLevel;
 
 
-abstract class AbstractAdapter extends AbstractLogger
+abstract class AbstractAdapter implements AdapterInterface
 {
-    /**
-     * Default loglevel
-     *
-     * @var string
-     */
-    private $level = LogLevel::DEBUG;
-
-    /**
-     *
-     * @param $level
-     */
-    public function setMinLevel($level)
+    public function save($level, $message, array $context = array())
     {
-        $this->level = $level;
-    }
-
-    /**
-     * @return string
-     */
-    public function getMinLevel()
-    {
-        return $this->level;
-    }
-
-    /**
-     * Interpolates context values into the message placeholders.
-     *
-     * @param $message
-     * @param array $context
-     * @return string
-     */
-    protected function interpolate($message, array $context = array())
-    {
-        $replace = array();
-        foreach ($context as $key => $val) {
-            $replace['{' . $key . '}'] = $val;
-        }
-        return strtr($message, $replace);
+        // TODO: Implement save() method.
     }
 
 }
