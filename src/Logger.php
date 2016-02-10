@@ -7,6 +7,7 @@ use Psr\Log\LogLevel;
 use Psr\Log\InvalidArgumentException;
 
 use Rioter\Logger\Adapters\AbstractAdapter;
+use Rioter\Logger\Adapters\NullAdapter;
 
 class Logger implements LoggerInterface
 {
@@ -17,7 +18,7 @@ class Logger implements LoggerInterface
     protected $adapterCount = 0;
 
     // имя логгера
-    protected $name;
+    protected $loggerName;
 
     // массив с log levels с цифрами
     public static $levels = array(
@@ -30,6 +31,46 @@ class Logger implements LoggerInterface
         LogLevel::INFO      => 6,
         LogLevel::DEBUG     => 7
     );
+
+    public function __construct(AbstractAdapter $adapter, $loggerName)
+    {
+        if(empty($adapter)) {
+            $adapter = new NullAdapter();
+        }
+        $this->setAdapter($adapter);
+        $this->setLoggerName($loggerName);
+    }
+
+    // установка адаптера для записи логов
+    public function setAdapter(AbstractAdapter $adapter)
+    {
+        $this->adapter = $adapter;
+    }
+
+    // получаем все установленые адаптеры
+    public function getAdapters()
+    {
+        return $this->adapters;
+    }
+
+    // устаналивает имя логгера
+    public function setLoggerName($loggerName)
+    {
+        $this->loggerName = $loggerName;
+    }
+
+    // получает имя логгера
+    public function getLoggerName()
+    {
+        return $this->loggerName;
+    }
+
+    // проверка на то правильный ли logLEvel
+    public function isLogLevel($logLevel)
+    {
+        return array_key_exists($logLevel, self::$levels);
+    }
+
 
     /**
      * System is unusable.
