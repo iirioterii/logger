@@ -7,37 +7,67 @@ use \Psr\Log\LogLevel;
 
 class ErrorHandler
 {
-
+    /**
+     * @var Logger
+     */
     protected $logger;
+
+    /**
+     * @var string
+     */
+
     protected $shutdownLogLevel = LogLevel::CRITICAL;
+    /**
+     * @var string
+     */
     protected $exceptionLogLevel = LogLevel::CRITICAL;
 
+    /**
+     * ErrorHandler constructor.
+     * @param Logger $logger
+     */
     public function __construct(Logger $logger)
     {
         $this->logger = $logger;
     }
 
-    // установка кастомного обработчика ошибок php
+    /**
+     * установка кастомного обработчика ошибок php
+     */
     public function regErrorHandler()
     {
         set_error_handler(array($this, 'logErrorHandler'));
     }
 
-    // установка кастомного обрботчика при завершении скрипта
+    /**
+     * установка кастомного обрботчика при завершении скрипта
+     *
+     * @param string $loglevel
+     */
     public function regShutdownHandler($loglevel = LogLevel::CRITICAL)
     {
         register_shutdown_function(array($this, 'logShutdownHandler'));
         $this->shutdownLogLevel = $loglevel;
     }
-
-    // установка кастомного обработчика исключений
+    /**
+     * установка кастомного обработчика исключений
+     *
+     * @param string $loglevel
+     */
     public function regExceptionHandler($loglevel = LogLevel::CRITICAL)
     {
         set_exception_handler(array($this, 'logExceptionHandler'));
         $this->exceptionLogLevel = $loglevel;
     }
 
-    // кастомный обработчки ошибок php
+    /**
+     * кастомный обработчки ошибок php
+     *
+     * @param $error
+     * @param $message
+     * @param $file
+     * @param $line
+     */
     public function logErrorHandler($error, $message, $file, $line)
     {
         $message = $message . ' | File: {file} | Line: {line}';
@@ -67,7 +97,9 @@ class ErrorHandler
         return;
     }
 
-    // кастомный обработчик при завершении скрипта
+    /**
+     * кастомный обработчик при завершении скрипта
+     */
     public function logShutdownHandler()
     {
         if ($lasterror = error_get_last()) {
@@ -80,7 +112,11 @@ class ErrorHandler
         }
     }
 
-    // кастомный обработчик исключений
+    /**
+     * кастомный обработчик исключений
+     *
+     * @param $exception
+     */
     public function logExceptionHandler($exception)
     {
         $message = $exception->getMessage() . ' | File: {file} | Line: {line}';
