@@ -64,6 +64,13 @@ $logger->debug('debug of errors id = {id} LINE: {line} FILE: {file}', array('id'
 $logger->warning('warning', array('id'=>1));
 ```
 
+Output:
+```no-highlight
+2016-02-10 23:54:40.436207: [ERROR] Message: message of errors 1
+2016-02-10 23:54:40.436633: [CRITICAL] Message: critical of errors 1
+2016-02-10 23:54:40.436866: [DEBUG] Message: debug of errors id = 1 LINE: 22 FILE: /home/iirioterii/server/logger/index.php
+2016-02-10 23:54:40.437079: [WARNING] Message: warning
+```
 ##Errors handlers.
 
 Create object of Errorhandler and give him Logger object
@@ -79,11 +86,3 @@ $handler->logExceptionHandler($exception); //give exception
 $handler->regErrorHandler() //register php errors
 ```
 
-
-Output:
-```no-highlight
-2016-02-10 23:54:40.436207: [ERROR] Message: message of errors 1
-2016-02-10 23:54:40.436633: [CRITICAL] Message: critical of errors 1
-2016-02-10 23:54:40.436866: [DEBUG] Message: debug of errors id = 1 LINE: 22 FILE: /home/iirioterii/server/logger/index.php
-2016-02-10 23:54:40.437079: [WARNING] Message: warning
-```
