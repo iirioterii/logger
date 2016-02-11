@@ -11,6 +11,7 @@ class FileAdapter extends AbstractAdapter
 {
     // файл для использования по умолчанию, если не задан уровень логирования
     protected $file;
+    private $defaultPermissions = 0777;
 
     // Имена файлов для использования различных уровней логирования
     protected $filenameLevels = array(
@@ -35,7 +36,7 @@ class FileAdapter extends AbstractAdapter
         $this->setFormatter($formatter);
     }
 
-    //
+    // задать для определнного уровня свой файл для логирования
     public function setLogLevelFile($level, $filename)
     {
         if (is_array($level)) {
@@ -57,14 +58,15 @@ class FileAdapter extends AbstractAdapter
     // Записывает лог в файл
     public function save($level, $message, array $context = array())
     {
+        //имя файла, сначала смотрим есть ли для опр правила свой путь,
+        // если нет берем то что задали при создании обьекта
         $fileName = $this->filenameLevels[$level] ?: $this->file;
-
         $context = array('placeholder' => $context);
         $log = $this->format($level, $message, $context);
-        $logDir = dirname($fileName);
+        $logDirectory = dirname($fileName);
 
-        if (!is_dir($logDir)) {
-            if (@mkdir($logDir, 0777, true) === false) {
+        if (!file_exists($logDirectory)) {
+            if (@mkdir($logDirectory, $this->defaultPermissions, true) === false) {
                 throw new RuntimeException('Failed to create log directory');
              }
         }
@@ -74,4 +76,6 @@ class FileAdapter extends AbstractAdapter
         }
         return true;
     }
+
 }
+

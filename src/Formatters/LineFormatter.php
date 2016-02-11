@@ -25,15 +25,14 @@ class LineFormatter extends AbstractFormatter
             '{message}' => $message,
             '{date}' => $this->getTimestamp()
         );
-        var_dump($message);
         // меняем паттерн на значения
         return strtr($this->pattern, $replace);
     }
 
-    // Нормализация
+    // Нормализация разных типов данных
     protected function normalize($message, array $context)
     {
-        // проверка скалярная ли перменная, если да то делаем из нее строку
+        // проверка скалярная ли перменная
         if (is_scalar($message)) {
             $message = (string) $message;
             if ($context['placeholder']) {
@@ -43,6 +42,10 @@ class LineFormatter extends AbstractFormatter
             return $message;
         }
 
+        if (is_null($message)) {
+            return 'null';
+        }
+
         return '[Unknown type]';
 
     }
@@ -50,14 +53,12 @@ class LineFormatter extends AbstractFormatter
     // Меняет плейсхолдеры на значения
     protected function interpolate($message, array $context)
     {
-        var_dump($message);
         $replace = array();
         foreach ($context as $key => $data) {
             $replace['{'.$key.'}'] = $data;
         }
         return strtr($message, $replace);
     }
-
 
 
 }

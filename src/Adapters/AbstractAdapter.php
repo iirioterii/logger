@@ -15,7 +15,7 @@ abstract class AbstractAdapter implements AdapterInterface
     // максимальный уровень логирования
     private $maxLevel = 0;
 
-    // Формтер используемый адпетором
+    // Форматтер используемый адпетором
     protected $formatter;
 
     // Имя адаптера
@@ -60,17 +60,13 @@ abstract class AbstractAdapter implements AdapterInterface
     // Установка формата даты
     public function setDateFormat($format)
     {
-        if ($this->formatter) {
-            $this->formatter->setDateFormat($format);
-        }
+        $this->formatter->setDateFormat($format);
     }
 
     // Получить формат даты
     public function getDateFormat()
     {
-        if ($this->formatter) {
-            return $this->formatter->getDateFormat();
-        }
+        return $this->formatter->getDateFormat();
     }
 
     // Устанвоить имя для адаптера
