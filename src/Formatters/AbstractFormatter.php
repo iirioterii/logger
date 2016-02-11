@@ -5,10 +5,18 @@ use DateTime;
 
 abstract class AbstractFormatter implements FormatterInterface
 {
-    // формат даты по умолчанию
+    /**
+     * формат даты по умолчанию
+     *
+     * @var string
+     */
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
-    // получам дату с микросекундами
+    /**
+     * получам дату с микросекундами
+     *
+     * @return string
+     */
     protected function getTimestamp()
     {
         $originalTime = microtime(true);
@@ -17,21 +25,27 @@ abstract class AbstractFormatter implements FormatterInterface
         return $date->format($this->dateFormat);
     }
 
-    // устанановить формат даты
+    /**
+     * устанановить формат даты
+     *
+     * @param $dateFormat
+     */
     public function setDateFormat($dateFormat)
     {
         $this->dateFormat = $dateFormat;
     }
 
-    // получить формат даты
+    /**
+     * получить формат даты
+     *
+     * @return string
+     */
     public function getDateFormat()
     {
         return $this->dateFormat;
     }
 
     /**
-     *
-     *
      * @param $level
      * @param $message
      * @param array $context

@@ -5,16 +5,28 @@ namespace Rioter\Logger\Formatters;
 
 class LineFormatter extends AbstractFormatter
 {
-
+    /**
+     * @var
+     */
     protected $pattern;
 
-    // Задаем паттерн для вывода в строчку
+    /**
+     * LineFormatter constructor.
+     * @param $pattern
+     */
     public function __construct($pattern)
     {
         $this->pattern = $pattern;
     }
 
-    // метод для формирования формата сообщения вывода
+    /**
+     * метод для формирования формата сообщения вывода
+     *
+     * @param $level
+     * @param $message
+     * @param array $context
+     * @return string
+     */
     public function format($level, $message, array $context = array())
     {
         // нормализируем сообщение
@@ -29,7 +41,13 @@ class LineFormatter extends AbstractFormatter
         return strtr($this->pattern, $replace);
     }
 
-    // Нормализация разных типов данных
+    /**
+     * Нормализация разных типов данных
+     *
+     * @param $message
+     * @param array $context
+     * @return string
+     */
     protected function normalize($message, array $context)
     {
         // проверка скалярная ли перменная
@@ -46,11 +64,17 @@ class LineFormatter extends AbstractFormatter
             return 'null';
         }
 
-        return '[Unknown type]';
+        return 'Unknown type';
 
     }
 
-    // Меняет плейсхолдеры на значения
+    /**
+     * Меняет плейсхолдеры на значения
+     *
+     * @param $message
+     * @param array $context
+     * @return string
+     */
     protected function interpolate($message, array $context)
     {
         $replace = array();
