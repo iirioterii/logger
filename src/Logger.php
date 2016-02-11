@@ -10,16 +10,33 @@ use Rioter\Logger\Adapters\AbstractAdapter;
 
 class Logger implements LoggerInterface
 {
-    // массив с адаптерами для того чтобы сохранять логи
+
+    /**
+     * массив с адаптерами
+     *
+     * @var array
+     */
     protected $adapters = [];
 
-    // подсчет количества адаптеров, во время выполнения
+    /**
+     * подсчет количества адаптеров, во время выполнения
+     *
+     * @var int
+     */
     protected $adapterCount = 0;
 
-    // имя логгера
+    /**
+     * имя логгера
+     *
+     * @var
+     */
     protected $loggerName;
 
-    // массив с log levels с цифрами
+    /**
+     * массив с log levels с цифрами, для удобства сравнения
+     *
+     * @var array
+     */
     public static $levels = array(
         LogLevel::EMERGENCY => 0,
         LogLevel::ALERT     => 1,
@@ -31,13 +48,22 @@ class Logger implements LoggerInterface
         LogLevel::DEBUG     => 7
     );
 
+    /**
+     * Logger constructor.
+     * @param AbstractAdapter $adapter
+     * @param string $loggerName
+     */
     public function __construct(AbstractAdapter $adapter, $loggerName='DefaultLogger')
     {
         $this->setAdapter($adapter);
         $this->setLoggerName($loggerName);
     }
 
-    // установка адаптера для записи логов
+    /**
+     * установка адаптера для записи логов
+     *
+     * @param AbstractAdapter $adapter
+     */
     public function setAdapter(AbstractAdapter $adapter)
     {
         $adapterName = $adapter->getAdapterName() ?: $this->adapterCount;
@@ -46,25 +72,43 @@ class Logger implements LoggerInterface
 
     }
 
-    // получаем все установленые адаптеры
+    /**
+     *получаем все установленые адаптеры
+     *
+     * @return array
+     */
     public function getAdapters()
     {
         return $this->adapters;
     }
 
-    // устаналивает имя логгера
+
+    /**
+     *устаналивает имя логгера
+     *
+     * @param $loggerName
+     */
     public function setLoggerName($loggerName)
     {
         $this->loggerName = $loggerName;
     }
 
-    // получает имя логгера
+    /**
+     * получает имя логгера
+     *
+     * @return mixed
+     */
     public function getLoggerName()
     {
         return $this->loggerName;
     }
 
-    // проверка на то правильный ли logLevel
+    /**
+     *проверка на то есть ли такой logLevel
+     *
+     * @param $logLevel
+     * @return bool
+     */
     public static function isLogLevel($logLevel)
     {
         return array_key_exists($logLevel, self::$levels);
@@ -191,7 +235,7 @@ class Logger implements LoggerInterface
         if (!self::isLogLevel($level)) {
            throw new InvalidArgumentException('Unknown level, check it');
         }
-
+        //перебераем все адаптеры, если адаптер соотвествует уровню записываем
         foreach($this->adapters as $adapter) {
             if ($adapter->isHandling($level)) {
                 $adapter->save($level, $message, $context);
