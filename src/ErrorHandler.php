@@ -20,25 +20,25 @@ class ErrorHandler
     // установка кастомного обработчика ошибок php
     public function regErrorHandler()
     {
-        set_error_handler(array($this, 'LogErrorHandler'));
+        set_error_handler(array($this, 'logErrorHandler'));
     }
 
     // установка кастомного обрботчика при завершении скрипта
     public function regShutdownHandler($loglevel = LogLevel::CRITICAL)
     {
-        register_shutdown_function(array($this, 'LogShutdownHandler'));
+        register_shutdown_function(array($this, 'logShutdownHandler'));
         $this->shutdownLogLevel = $loglevel;
     }
 
     // установка кастомного обработчика исключений
     public function regExceptionHandler($loglevel = LogLevel::CRITICAL)
     {
-        set_exception_handler(array($this, 'LogExceptionHandler'));
+        set_exception_handler(array($this, 'logExceptionHandler'));
         $this->exceptionLogLevel = $loglevel;
     }
 
     // кастомный обработчки ошибок php
-    public function LogErrorHandler($error, $message, $file, $line)
+    public function logErrorHandler($error, $message, $file, $line)
     {
         $message = $message . ' | File: {file} | Line: {line}';
         $context = array(
@@ -68,7 +68,7 @@ class ErrorHandler
     }
 
     // кастомный обработчик при завершении скрипта
-    public function LogShutdownHandler()
+    public function logShutdownHandler()
     {
         if ($lasterror = error_get_last()) {
             $message = $lasterror['message'] . ' | File: {file} | Line: {line}';
@@ -81,7 +81,7 @@ class ErrorHandler
     }
 
     // кастомный обработчик исключений
-    public function LogExceptionHandler($exception)
+    public function logExceptionHandler($exception)
     {
         $message = $exception->getMessage() . ' | File: {file} | Line: {line}';
         $context = array(
