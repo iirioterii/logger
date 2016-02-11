@@ -9,19 +9,43 @@ use Psr\Log\LogLevel;
 
 abstract class AbstractAdapter implements AdapterInterface
 {
-    // минимальный уровень логирования
+
+    /**
+     * минимальный уровень логирования
+     *
+     * @var int
+     */
     private $minLevel = 7;
 
-    // максимальный уровень логирования
+    /**
+     * максимальный уровень логирования
+     *
+     * @var int
+     */
     private $maxLevel = 0;
 
-    // Форматтер используемый адпетором
+
+    /**
+     * форматтер используемый адаптером
+     *
+     * @var
+     */
     protected $formatter;
 
-    // Имя адаптера
+    /**
+     * форматтер используемый адпетором
+     *
+     * @var string
+     */
     protected $adapterName = '';
 
-    // Проверка уровня журнала, обрабатываемая адаептером
+
+    /**
+     * проверка уровня журнала, обрабатываемая адаептером
+     *
+     * @param $level
+     * @return bool
+     */
     public function isHandling($level)
     {
         $min = $this->minLevel;
@@ -30,7 +54,12 @@ abstract class AbstractAdapter implements AdapterInterface
         return ($min >= $level && $level >= $max);
     }
 
-    // Установка минимального уровня лоигрования для адаптера
+    /**
+     * Установка минимального уровня логирования для адаптера
+     *
+     * @param null $minLevel
+     * @param null $maxLevel
+     */
     public function setLevel($minLevel = null, $maxLevel = null)
     {
         if (!$minLevel || !Logger::isLoglevel($minLevel)) {
@@ -45,43 +74,77 @@ abstract class AbstractAdapter implements AdapterInterface
         $this->maxLevel = Logger::$levels[$maxLevel];
     }
 
-    // Устанавливаем форматтер
+    /**
+     * устанавливаем форматтер
+     *
+     * @param AbstractFormatter $formatter
+     */
     protected function setFormatter(AbstractFormatter $formatter)
     {
         $this->formatter = $formatter;
     }
 
-    // получаем ф
+    /**
+     * получаем форматированную строку
+     *
+     * @param $level
+     * @param $message
+     * @param array $context
+     * @return mixed
+     */
     protected function format($level, $message, $context = array())
     {
         return $this->formatter->format($level, $message, $context);
     }
 
-    // Установка формата даты
+    /**
+     * установка формата даты
+     *
+     * @param $format
+     */
     public function setDateFormat($format)
     {
         $this->formatter->setDateFormat($format);
     }
 
-    // Получить формат даты
+    /**
+     * получить формат даты
+     *
+     * @return mixed
+     */
     public function getDateFormat()
     {
         return $this->formatter->getDateFormat();
     }
 
-    // Устанвоить имя для адаптера
+    /**
+     * установка имени адаптера
+     *
+     * @param $adapterName
+     */
     public function setAdapterName($adapterName)
     {
         $this->adapterName = $adapterName;
     }
 
-    // Получить имя для адаптера
+    /**
+     * получить имя адаптера
+     *
+     * @return string
+     */
     public function getAdapterName()
     {
         return $this->adapterName;
     }
 
-    // сохраняем лог
+    /**
+     * абстрактный метод для записи в лог
+     *
+     * @param $level
+     * @param $message
+     * @param array $context
+     * @return mixed
+     */
     abstract public function save($level, $message, array $context = array());
 
 }

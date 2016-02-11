@@ -9,11 +9,25 @@ use Rioter\Logger\Formatters\LineFormatter;
 
 class FileAdapter extends AbstractAdapter
 {
-    // файл для использования по умолчанию, если не задан уровень логирования
+    /**
+     * файл для использования по умолчанию, если не задан уровень логирования
+     *
+     * @var
+     */
     protected $file;
+
+    /**
+     * права на запись по умолчанию
+     *
+     * @var int
+     */
     private $defaultPermissions = 0777;
 
-    // Имена файлов для использования различных уровней логирования
+    /**
+     * имена файлов для использования различных уровней логирования
+     *
+     * @var array
+     */
     protected $filenameLevels = array(
         LogLevel::EMERGENCY => '',
         LogLevel::ALERT     => '',
@@ -25,7 +39,12 @@ class FileAdapter extends AbstractAdapter
         LogLevel::DEBUG     => ''
     );
 
-    //
+    /**
+     * FileAdapter constructor.
+     * @param $file
+     * @param string $level
+     * @param string $pattern
+     */
     public function __construct($file, $level = logLevel::DEBUG, $pattern = '' )
     {
         $this->file = $file;
@@ -36,7 +55,12 @@ class FileAdapter extends AbstractAdapter
         $this->setFormatter($formatter);
     }
 
-    // задать для определнного уровня свой файл для логирования
+    /**
+     * задать для определенного уровня свой файл для логирования
+     *
+     * @param $level
+     * @param $filename
+     */
     public function setLogLevelFile($level, $filename)
     {
         if (is_array($level)) {
@@ -48,14 +72,24 @@ class FileAdapter extends AbstractAdapter
         }
     }
 
-
+    /**
+     * получить имя файлов и уровень логов
+     *
+     * @return array
+     */
     public function getLogLevelFiles()
     {
         return $this->filenameLevels;
     }
 
-
-    // Записывает лог в файл
+    /**
+     * Записывает лог в файл
+     *
+     * @param $level
+     * @param $message
+     * @param array $context
+     * @return bool
+     */
     public function save($level, $message, array $context = array())
     {
         //имя файла, сначала смотрим есть ли для опр правила свой путь,
@@ -74,6 +108,7 @@ class FileAdapter extends AbstractAdapter
         if (file_put_contents($fileName, $log, FILE_APPEND | LOCK_EX) === false) {
             throw new RuntimeException('Failed to write log file');
         }
+
         return true;
     }
 
