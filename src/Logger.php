@@ -16,21 +16,21 @@ class Logger implements LoggerInterface
      *
      * @var array
      */
-    protected $adapters = [];
+    private $adapters = [];
 
     /**
      * подсчет количества адаптеров, во время выполнения
      *
      * @var int
      */
-    protected $adapterCount = 0;
+    private $adapterCount = 0;
 
     /**
      * имя логгера
      *
      * @var
      */
-    protected $loggerName;
+    private $loggerName;
 
     /**
      * массив с log levels с цифрами, для удобства сравнения

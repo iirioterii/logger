@@ -45,9 +45,9 @@ FileAdapter methods:
 $fileAdapter->setAdapterName('fileAdapter'); //set adapter's name
 $fileAdapter->setDateFormat('H:i:s');      //set date`s format
 $fileAdapter->setLevel('debug', 'emergency'); //set min and max log levels
-$fileAdapter->setLogLevelFile(array('error', 'debug'), 'logs/error_debug.txt'); // or you can use array for multiply setting 
-$fileAdapter->setLogLevelFile('warning', 'logs/warning.txt'); // set different pathes for each errors log
-$fileAdapter->getLogLevelFiles(); //get pathes and log levels
+$fileAdapter->setMethodLogLevelFile(array('error', 'debug'), 'logs/error_debug.txt'); // or you can use array for multiply setting 
+$fileAdapter->setMethodLogLevelFile('warning', 'logs/warning.txt'); // set different pathes for each errors log
+$fileAdapter->getMethodsLogLevelFiles(); //get pathes and log levels
 ```
 
 Create object of logger, and set adapter;

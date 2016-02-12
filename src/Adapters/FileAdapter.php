@@ -9,12 +9,13 @@ use Rioter\Logger\Formatters\LineFormatter;
 
 class FileAdapter extends AbstractAdapter
 {
+
     /**
      * файл для использования по умолчанию, если не задан уровень логирования
      *
      * @var
      */
-    protected $file;
+    private $file;
 
     /**
      * права на запись по умолчанию
@@ -28,7 +29,7 @@ class FileAdapter extends AbstractAdapter
      *
      * @var array
      */
-    protected $filenameLevels = array(
+    private $filenameLevels = array(
         LogLevel::EMERGENCY => '',
         LogLevel::ALERT     => '',
         LogLevel::CRITICAL  => '',
@@ -61,7 +62,7 @@ class FileAdapter extends AbstractAdapter
      * @param $level
      * @param $filename
      */
-    public function setLogLevelFile($level, $filename)
+    public function setMethodLogLevelFile($level, $filename)
     {
         if (is_array($level)) {
             foreach($level as $logLevel) {
@@ -77,7 +78,7 @@ class FileAdapter extends AbstractAdapter
      *
      * @return array
      */
-    public function getLogLevelFiles()
+    public function getMethodsLogLevelFiles()
     {
         return $this->filenameLevels;
     }
@@ -97,6 +98,7 @@ class FileAdapter extends AbstractAdapter
         $fileName = $this->filenameLevels[$level] ?: $this->file;
         $context = array('placeholder' => $context);
         $log = $this->format($level, $message, $context);
+
         $logDirectory = dirname($fileName);
 
         if (!file_exists($logDirectory)) {

@@ -2,21 +2,23 @@
 
 namespace Rioter\Logger\Adapters;
 
-use Psr\Log\LogLevel;
 
-
-class NullAdapter extends AbstractAdapter
+class DBAdapter extends AbstractAdapter
 {
 
+    public function __construct()
+    {
+    }
+
     /**
-     * сохраняет в никуда - заглушка
-     *
      * @param $level
      * @param $message
      * @param array $context
+     * @return mixed
      */
     public function save($level, $message, array $context = array())
     {
+        // TODO: Implement save() method.
     }
 
 }

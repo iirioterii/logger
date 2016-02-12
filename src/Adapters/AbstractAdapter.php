@@ -33,15 +33,15 @@ abstract class AbstractAdapter implements AdapterInterface
     protected $formatter;
 
     /**
-     * форматтер используемый адпетором
+     * имя адептера используемый адаптером
      *
      * @var string
      */
-    protected $adapterName = '';
+    private $adapterName = '';
 
 
     /**
-     * проверка уровня журнала, обрабатываемая адаептером
+     * проверка уровня журнала, обрабатываемая адаптером
      *
      * @param $level
      * @return bool
