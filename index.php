@@ -25,7 +25,7 @@ $sysLogAdapter->setLevel(null, LogLevel::ERROR);
 $logger = new Logger($sysLogAdapter);
 $logger->setAdapter($fileAdapter);
 $logger->setAdapter($echoAdapter);
-$logger->error('message of errors {id}', array('id'=>1));
+$logger->error('message of errors'. __FILE__);
 $logger->debug('debug of errors {id} {line} {file}', array('id'=>1, 'line'=>__LINE__, 'file' => __FILE__));
 $logger->warning('warning', array('id'=>1));
 

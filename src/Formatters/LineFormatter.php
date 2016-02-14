@@ -5,6 +5,7 @@ namespace Rioter\Logger\Formatters;
 
 class LineFormatter extends AbstractFormatter
 {
+
     /**
      * @var
      */
@@ -29,43 +30,21 @@ class LineFormatter extends AbstractFormatter
      */
     public function format($level, $message, array $context = array())
     {
+
         // нормализируем сообщение
-        $message = $this->normalize($message, $context);
+        if ($context['placeholder']) {
+            $message = $this->interpolate($message, $context['placeholder']);
+        }
         // массив параметров для формирования строки вывода
         $replace = array(
             '{level}' => strtoupper($level),
             '{message}' => $message,
-            '{date}' => $this->getTimestamp()
+            '{date}' => $this->getDateTime(),
+            '{line}' => __LINE__,
+            '{file}' => __FILE__
         );
         // меняем паттерн на значения
         return strtr($this->pattern, $replace);
-    }
-
-    /**
-     * Нормализация разных типов данных
-     *
-     * @param $message
-     * @param array $context
-     * @return string
-     */
-    protected function normalize($message, array $context)
-    {
-        // проверка скалярная ли перменная
-        if (is_scalar($message)) {
-            $message = (string) $message;
-            if ($context['placeholder']) {
-                // делаем интерполяцию сообщения
-                $message = $this->interpolate($message, $context['placeholder']);
-            }
-            return $message;
-        }
-
-        if (is_null($message)) {
-            return 'null';
-        }
-
-        return 'Unknown type';
-
     }
 
     /**

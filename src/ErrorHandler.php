@@ -102,11 +102,11 @@ class ErrorHandler
      */
     public function logShutdownHandler()
     {
-        if ($lasterror = error_get_last()) {
-            $message = $lasterror['message'] . ' | File: {file} | Line: {line}';
+        if ($lastError = error_get_last()) {
+            $message = $lastError['message'] . ' | File: {file} | Line: {line}';
             $context = array(
-                'file' => $lasterror['file'],
-                'line' => $lasterror['line']
+                'file' => $lastError['file'],
+                'line' => $lastError['line']
             );
             $this->logger->log($this->shutdownLogLevel, $message, $context);
         }

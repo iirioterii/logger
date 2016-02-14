@@ -17,7 +17,7 @@ abstract class AbstractFormatter implements FormatterInterface
      *
      * @return string
      */
-    protected function getTimestamp()
+    protected function getDateTime()
     {
         $originalTime = microtime(true);
         $micro = sprintf("%06d", ($originalTime - floor($originalTime)) * 1000000);

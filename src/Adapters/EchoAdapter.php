@@ -7,6 +7,7 @@ use Rioter\Logger\Formatters\LineFormatter;
 
 class EchoAdapter extends AbstractAdapter
 {
+
     /**
      * EchoAdapter constructor.
      * @param string $level
@@ -15,7 +16,7 @@ class EchoAdapter extends AbstractAdapter
     public function __construct($level = logLevel::DEBUG, $pattern = '')
     {
         $this->setLevel($level);
-        $pattern = $pattern ?: "{date}: [{level}] Message: {message} <br>";
+        $pattern = $pattern ?: "{date}: [{level}] Message: {message}<br>";
 
         $formatter = new LineFormatter($pattern);
         $this->setFormatter($formatter);
