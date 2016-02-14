@@ -5,6 +5,7 @@ namespace Rioter\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\Log\InvalidArgumentException;
+use Rioter\Logger\Adapters\NullAdapter;
 
 use Rioter\Logger\Adapters\AbstractAdapter;
 
@@ -53,8 +54,11 @@ class Logger implements LoggerInterface
      * @param AbstractAdapter $adapter
      * @param string $loggerName
      */
-    public function __construct(AbstractAdapter $adapter, $loggerName='DefaultLogger')
+    public function __construct(AbstractAdapter $adapter = null, $loggerName='DefaultLogger')
     {
+        if (!$adapter) {
+            $adapter = new NullAdapter();
+        }
         $this->setAdapter($adapter);
         $this->setLoggerName($loggerName);
     }
@@ -69,7 +73,6 @@ class Logger implements LoggerInterface
         $adapterName = $adapter->getAdapterName() ?: $this->adapterCount;
         $this->adapters[$adapterName] = $adapter;
         $this->adapterCount++;
-
     }
 
     /**
