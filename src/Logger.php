@@ -75,6 +75,23 @@ class Logger implements LoggerInterface
         $this->adapterCount++;
     }
 
+    public function hasAdapter($adapterName)
+    {
+        return array_key_exists($adapterName, $this->adapters);
+    }
+
+    /**
+     * ансеттит адаптер
+     *
+     * @param $adapterName
+     */
+    public function unsetAdapter($adapterName)
+    {
+        if ($this->hasAdapter($adapterName)) {
+            unset($this->adapters[$adapterName]);
+        }
+    }
+
     /**
      *получаем все установленые адаптеры
      *
