@@ -5,7 +5,7 @@ namespace Rioter\Logger;
 use \Psr\Log\LogLevel;
 
 
-class ErrorHandler
+class ErrorsHandler
 {
     /**
      * @var Logger
@@ -36,17 +36,17 @@ class ErrorHandler
      */
     public function regErrorHandler()
     {
-        set_error_handler(array($this, 'logErrorHandler'));
+        set_error_handler(array(&$this, 'logErrorHandler'));
     }
 
     /**
-     * установка кастомного обрботчика при завершении скрипта
+     * установка кастомного обработчика при завершении скрипта
      *
      * @param string $loglevel
      */
     public function regShutdownHandler($loglevel = LogLevel::CRITICAL)
     {
-        register_shutdown_function(array($this, 'logShutdownHandler'));
+        register_shutdown_function(array(&$this, 'logShutdownHandler'));
         $this->shutdownLogLevel = $loglevel;
     }
     /**
@@ -56,7 +56,7 @@ class ErrorHandler
      */
     public function regExceptionHandler($loglevel = LogLevel::CRITICAL)
     {
-        set_exception_handler(array($this, 'logExceptionHandler'));
+        set_exception_handler(array(&$this, 'logExceptionHandler'));
         $this->exceptionLogLevel = $loglevel;
     }
 

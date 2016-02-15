@@ -24,7 +24,7 @@ class Logger implements LoggerInterface
      *
      * @var int
      */
-    private $adapterCount = 0;
+    private $adaptersCount = 0;
 
     /**
      * имя логгера
@@ -70,9 +70,9 @@ class Logger implements LoggerInterface
      */
     public function setAdapter(AbstractAdapter $adapter)
     {
-        $adapterName = $adapter->getAdapterName() ?: $this->adapterCount;
+        $adapterName = $adapter->getAdapterName() ?: $this->adaptersCount;
         $this->adapters[$adapterName] = $adapter;
-        $this->adapterCount++;
+        $this->adaptersCount++;
     }
 
     public function hasAdapter($adapterName)

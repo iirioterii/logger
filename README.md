@@ -55,9 +55,9 @@ $fileAdapter->setLevel(LogLevel::DEBUG, LogLevel::INFO);
 
 ##Errors handlers.
 
-Create object of Errorhandler and give him Logger object
+Create object of Errorshandler and give him Logger object
 ```php
-$handler = new \Rioter\Logger\ErrorHandler($logger);
+$handler = new \Rioter\Logger\ErrorsHandler($logger);
 ```
 
 and register handlers
