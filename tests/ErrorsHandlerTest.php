@@ -10,12 +10,15 @@ use Rioter\Logger\Adapters\EchoAdapter;
 
 class ErrorsHandlerTest extends \PHPUnit_Framework_TestCase
 {
+
     private $logger;
 
     public function setUp()
     {
         $echo = new EchoAdapter(LogLevel::DEBUG, '{message}');
         $this->logger = new Logger($echo);
+        $this->logger->error('warning');
+
     }
 
     public function testLogErrorHandler()
@@ -23,7 +26,6 @@ class ErrorsHandlerTest extends \PHPUnit_Framework_TestCase
         $this->expectOutputRegex("/warning (.*)/");
         $handler = new ErrorsHandler($this->logger);
         $handler->regErrorHandler();
-        $this->logger->error('warning');
         trigger_error('warning', E_USER_WARNING);
     }
 

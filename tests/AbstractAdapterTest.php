@@ -50,6 +50,7 @@ class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter->setLevel(LogLevel::CRITICAL);
         $this->assertTrue($adapter->isHandling(LogLevel::CRITICAL));
         $this->assertTrue($adapter->isHandling(LogLevel::EMERGENCY));
+        $this->assertTrue($adapter->isHandling(LogLevel::ALERT));
         $this->assertFalse($adapter->isHandling(LogLevel::ERROR));
         $this->assertFalse($adapter->isHandling(LogLevel::WARNING));
         $this->assertFalse($adapter->isHandling(LogLevel::NOTICE));
@@ -63,6 +64,8 @@ class AbstractAdapterTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($adapter->isHandling(LogLevel::INFO));
         $this->assertFalse($adapter->isHandling(LogLevel::DEBUG));
         $this->assertFalse($adapter->isHandling(LogLevel::EMERGENCY));
+        $this->assertFalse($adapter->isHandling(LogLevel::ALERT));
+
     }
 
     public function testSetBadLevel()

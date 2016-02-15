@@ -49,7 +49,7 @@ class SysLogAdapter extends AbstractAdapter
      * @param $level
      * @return int
      */
-    private function getSyslogLevel($level)
+    private function getSysLogLevel($level)
     {
         switch ($level) {
             case LogLevel::EMERGENCY:

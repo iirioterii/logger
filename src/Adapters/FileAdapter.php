@@ -29,7 +29,7 @@ class FileAdapter extends AbstractAdapter
      *
      * @var array
      */
-    private $filenameLevels = array(
+    protected $filenameLevels = array(
         LogLevel::EMERGENCY => '',
         LogLevel::ALERT     => '',
         LogLevel::CRITICAL  => '',

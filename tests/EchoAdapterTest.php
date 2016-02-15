@@ -18,7 +18,7 @@ class EchoAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testSave()
     {
-        $this->expectOutputString("INFO: some info");
+        $this->expectOutputString('INFO: some info');
         $echoAdapter = new EchoAdapter(LogLevel::DEBUG, '{level}: {message}');
         $echoAdapter->save(LogLevel::INFO, 'some info');
     }

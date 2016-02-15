@@ -80,6 +80,7 @@ class LoggerTest  extends \PHPUnit_Framework_TestCase
         $logger = new Logger($echo);
         $logger->alert('alert');
     }
+
     public function testCritical()
     {
         $this->expectOutputString('critical');
@@ -87,6 +88,7 @@ class LoggerTest  extends \PHPUnit_Framework_TestCase
         $logger = new Logger($echo);
         $logger->critical('critical');
     }
+
     public function testError()
     {
         $this->expectOutputString('error');
@@ -94,6 +96,7 @@ class LoggerTest  extends \PHPUnit_Framework_TestCase
         $logger = new Logger($echo);
         $logger->error('error');
     }
+
     public function testWarning()
     {
         $this->expectOutputString('warning');
@@ -101,6 +104,7 @@ class LoggerTest  extends \PHPUnit_Framework_TestCase
         $logger = new Logger($echo);
         $logger->warning('warning');
     }
+
     public function testNotice()
     {
         $this->expectOutputString('notice');
@@ -108,6 +112,7 @@ class LoggerTest  extends \PHPUnit_Framework_TestCase
         $logger = new Logger($echo);
         $logger->notice('notice');
     }
+
     public function testInfo()
     {
         $this->expectOutputString('info');
@@ -115,6 +120,7 @@ class LoggerTest  extends \PHPUnit_Framework_TestCase
         $logger = new Logger($echo);
         $logger->info('info');
     }
+
     public function testDebug()
     {
         $this->expectOutputString('debug');
