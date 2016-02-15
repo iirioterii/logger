@@ -14,7 +14,6 @@ class ErrorsHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        parent::setUp();
         $echo = new EchoAdapter(LogLevel::DEBUG, '{message}');
         $this->logger = new Logger($echo);
     }
@@ -38,16 +37,5 @@ class ErrorsHandlerTest extends \PHPUnit_Framework_TestCase
         $exception = new \RuntimeException('Runtime exception');
         $handler->logExceptionHandler($exception);
     }
-
-    public function testLogShutdownHandler()
-    {
-        $this->expectOutputRegex("/critical (.*)/");
-        $handler = new ErrorsHandler($this->logger);
-        $handler->regShutdownHandler();
-        $this->logger->critical('critical');
-        callToUndefinedFunction();
-    }
-
-
 
 }
