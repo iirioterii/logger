@@ -78,6 +78,7 @@ $fileAdapter = new Adapters\FileAdapter('logs/log.txt');
 ```
 
 FileAdapter methods:
+```php
 $fileAdapter->setMethodLogLevelFile(array('error', 'debug'), 'logs/error_debug.txt'); // or you can use array for multiply setting 
 $fileAdapter->setMethodLogLevelFile('warning', 'logs/warning.txt'); // set different pathes for each errors log
 $fileAdapter->getMethodsLogLevelFiles(); //get pathes and log levels
