@@ -13,28 +13,28 @@ class Logger implements LoggerInterface
 {
 
     /**
-     * массив с адаптерами
+     * Adapters array
      *
      * @var array
      */
     private $adapters = [];
 
     /**
-     * подсчет количества адаптеров, во время выполнения
+     * Counts of adapters
      *
      * @var int
      */
     private $adaptersCount = 0;
 
     /**
-     * имя логгера
+     * Logger name
      *
      * @var
      */
     private $loggerName;
 
     /**
-     * массив с log levels с цифрами, для удобства сравнения
+     * Log levels array with number
      *
      * @var array
      */
@@ -64,7 +64,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * установка адаптера для записи логов
+     * Set adapter for save logs
      *
      * @param AbstractAdapter $adapter
      */
@@ -75,13 +75,19 @@ class Logger implements LoggerInterface
         $this->adaptersCount++;
     }
 
+    /**
+     * Check if adapter is set
+     *
+     * @param $adapterName
+     * @return bool
+     */
     public function hasAdapter($adapterName)
     {
         return array_key_exists($adapterName, $this->adapters);
     }
 
     /**
-     * ансеттит адаптер
+     * Unset adapter
      *
      * @param $adapterName
      */
@@ -93,7 +99,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     *получаем все установленые адаптеры
+     * Get all set adapters
      *
      * @return array
      */
@@ -104,7 +110,7 @@ class Logger implements LoggerInterface
 
 
     /**
-     *устаналивает имя логгера
+     * Set logger name
      *
      * @param $loggerName
      */
@@ -114,7 +120,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * получает имя логгера
+     * Get logger name
      *
      * @return mixed
      */
@@ -124,7 +130,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     *проверка на то есть ли такой logLevel
+     * check if log level exist
      *
      * @param $logLevel
      * @return bool
@@ -255,7 +261,7 @@ class Logger implements LoggerInterface
         if (!self::isLogLevel($level)) {
            throw new InvalidArgumentException('Unknown level, check it');
         }
-        //перебераем все адаптеры, если адаптер соотвествует уровню записываем
+        // iterate all adapters and if is handling save
         foreach($this->adapters as $adapter) {
             if ($adapter->isHandling($level)) {
                 $adapter->save($level, $message, $context);

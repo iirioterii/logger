@@ -11,14 +11,14 @@ abstract class AbstractAdapter implements AdapterInterface
 {
 
     /**
-     * минимальный уровень логирования
+     * Min log level | LogLevel::DEBUG
      *
      * @var int
      */
     private $minLevel = 7;
 
     /**
-     * максимальный уровень логирования
+     * Max log level | LogLevel::EMERGENCY
      *
      * @var int
      */
@@ -26,14 +26,14 @@ abstract class AbstractAdapter implements AdapterInterface
 
 
     /**
-     * форматтер используемый адаптером
+     * Formatter
      *
      * @var
      */
     protected $formatter;
 
     /**
-     * имя адептера используемый адаптером
+     * Adapter name
      *
      * @var string
      */
@@ -41,7 +41,7 @@ abstract class AbstractAdapter implements AdapterInterface
 
 
     /**
-     * проверка уровня журнала, обрабатываемая адаптером
+     * Checks the log level is handled with adaptor
      *
      * @param $level
      * @return bool
@@ -55,7 +55,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * Установка минимального уровня логирования для адаптера
+     * Set min and max log levels for this adapter
      *
      * @param null $minLevel
      * @param null $maxLevel
@@ -75,7 +75,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * устанавливаем форматтер
+     * Set formatter
      *
      * @param AbstractFormatter $formatter
      */
@@ -85,7 +85,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * получаем форматированную строку
+     * Get formatting message
      *
      * @param $level
      * @param $message
@@ -98,7 +98,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * установка формата даты
+     * Set dateformat
      *
      * @param $format
      */
@@ -108,7 +108,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * получить формат даты
+     * Get dateformat
      *
      * @return mixed
      */
@@ -118,7 +118,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * установка имени адаптера
+     * Set adapter name
      *
      * @param $adapterName
      */
@@ -128,7 +128,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * получить имя адаптера
+     * Get adapter name
      *
      * @return string
      */
@@ -138,7 +138,7 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * абстрактный метод для записи в лог
+     * Abstract method to save log
      *
      * @param $level
      * @param $message

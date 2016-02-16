@@ -11,21 +11,21 @@ class FileAdapter extends AbstractAdapter
 {
 
     /**
-     * файл для использования по умолчанию, если не задан уровень логирования
+     * Default file to logging
      *
      * @var
      */
     private $file;
 
     /**
-     * права на запись по умолчанию
+     * Default permissions
      *
      * @var int
      */
     private $defaultPermissions = 0777;
 
     /**
-     * имена файлов для использования различных уровней логирования
+     * Filenames for different log levels
      *
      * @var array
      */
@@ -57,7 +57,7 @@ class FileAdapter extends AbstractAdapter
     }
 
     /**
-     * задать для определенного уровня свой файл для логирования
+     * Set log level and file name for different logging methods
      *
      * @param $level
      * @param $filename
@@ -74,7 +74,7 @@ class FileAdapter extends AbstractAdapter
     }
 
     /**
-     * получить имя файлов и уровень логов
+     * Get filenames and log levels
      *
      * @return array
      */
@@ -84,7 +84,7 @@ class FileAdapter extends AbstractAdapter
     }
 
     /**
-     * Записывает лог в файл
+     * Save log to file
      *
      * @param $level
      * @param $message
@@ -93,8 +93,7 @@ class FileAdapter extends AbstractAdapter
      */
     public function save($level, $message, array $context = array())
     {
-        //имя файла, сначала смотрим есть ли для опр правила свой путь,
-        // если нет берем то что задали при создании обьекта
+        // if filenameLevels exist use it, else use default filename to save
         $fileName = $this->filenameLevels[$level] ?: $this->file;
         $context = array('placeholder' => $context);
         $log = $this->format($level, $message, $context);

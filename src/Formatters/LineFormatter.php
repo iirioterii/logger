@@ -7,6 +7,8 @@ class LineFormatter extends AbstractFormatter
 {
 
     /**
+     * Pattern for formatter
+     *
      * @var
      */
     protected $pattern;
@@ -21,7 +23,7 @@ class LineFormatter extends AbstractFormatter
     }
 
     /**
-     * метод для формирования формата сообщения вывода
+     * format output string message
      *
      * @param $level
      * @param $message
@@ -31,11 +33,11 @@ class LineFormatter extends AbstractFormatter
     public function format($level, $message, array $context = array())
     {
 
-        // нормализируем сообщение
+        // normalize message
         if ($context['placeholder']) {
             $message = $this->interpolate($message, $context['placeholder']);
         }
-        // массив параметров для формирования строки вывода
+        // array of placeholder for output string
         $replace = array(
             '{level}' => strtoupper($level),
             '{message}' => $message,
@@ -43,12 +45,12 @@ class LineFormatter extends AbstractFormatter
             '{line}' => __LINE__,
             '{file}' => __FILE__
         );
-        // меняем паттерн на значения
+        // replace pattern to values
         return strtr($this->pattern, $replace);
     }
 
     /**
-     * Меняет плейсхолдеры на значения
+     * Replace placeholders with context
      *
      * @param $message
      * @param array $context

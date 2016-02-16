@@ -2,14 +2,12 @@
 
 namespace Rioter\Logger\Adapters;
 
-use Psr\Log\LogLevel;
-
 
 class NullAdapter extends AbstractAdapter
 {
 
     /**
-     * сохраняет в никуда - заглушка
+     * save to anywhere
      *
      * @param $level
      * @param $message

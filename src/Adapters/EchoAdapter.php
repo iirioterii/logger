@@ -23,6 +23,8 @@ class EchoAdapter extends AbstractAdapter
     }
 
     /**
+     * Save log to browser
+     *
      * @param $level
      * @param $message
      * @param array $context

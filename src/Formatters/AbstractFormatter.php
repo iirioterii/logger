@@ -6,14 +6,14 @@ use DateTime;
 abstract class AbstractFormatter implements FormatterInterface
 {
     /**
-     * формат даты по умолчанию
+     * Default dateformat
      *
      * @var string
      */
     protected $dateFormat = 'Y-m-d H:i:s.u';
 
     /**
-     * получам дату с микросекундами
+     * Get date with micro
      *
      * @return string
      */
@@ -26,7 +26,7 @@ abstract class AbstractFormatter implements FormatterInterface
     }
 
     /**
-     * устанановить формат даты
+     * Set dateformat
      *
      * @param $dateFormat
      */
@@ -36,7 +36,7 @@ abstract class AbstractFormatter implements FormatterInterface
     }
 
     /**
-     * получить формат даты
+     * Get Date Format
      *
      * @return string
      */
@@ -46,6 +46,8 @@ abstract class AbstractFormatter implements FormatterInterface
     }
 
     /**
+     * Format string
+     *
      * @param $level
      * @param $message
      * @param array $context

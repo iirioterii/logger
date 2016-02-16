@@ -7,7 +7,7 @@ interface AdapterInterface
 {
 
     /**
-     * метод который будет вызываться логгером для сохранения лога
+     * Save log
      *
      * @param $level
      * @param $message

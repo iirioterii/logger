@@ -6,7 +6,7 @@ namespace Rioter\Logger\Formatters;
 interface FormatterInterface
 {
     /**
-     * метод для форматирования
+     * Format string
      *
      * @param $level
      * @param $message
